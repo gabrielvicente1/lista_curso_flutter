@@ -9,12 +9,10 @@ class TodoListItem extends StatelessWidget {
     super.key,
     required this.todo,
     required this.onDelete,
-    required this.onEdit,
       });
 
   final Todo todo;
   final Function(Todo) onDelete;
-  final Function(Todo) onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +23,6 @@ class TodoListItem extends StatelessWidget {
           motion: const ScrollMotion(),
           extentRatio: 0.57,
           children: [
-            SlidableAction(
-              flex: 4,
-              onPressed: (context) {
-                onEdit(todo);
-              },
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white,
-              icon: Icons.edit,
-              label: 'Editar',
-            ),
             SlidableAction(
               flex: 4,
               onPressed: (context) {

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list/models/todo.dart';
 import 'package:todo_list/repositories/todo_repository.dart';
@@ -6,7 +5,7 @@ import 'package:todo_list/repositories/todo_repository.dart';
 import '../widgets/todo_list_item.dart';
 
 class TodoListPage extends StatefulWidget {
-  TodoListPage({super.key});
+  const TodoListPage({super.key});
 
   @override
   State<TodoListPage> createState() => _TodoListPageState();
@@ -17,8 +16,6 @@ class _TodoListPageState extends State<TodoListPage> {
   final TodoRepository todoRepository = TodoRepository();
 
   List<Todo> todos = [];
-  Todo? editTodo;
-  int? editTodoPos;
   Todo? deletedTodo;
   int? deletedTodoPos;
   String? errorText;
@@ -41,11 +38,11 @@ class _TodoListPageState extends State<TodoListPage> {
     return LayoutBuilder(builder: (context, constraint) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Lista de Tarefas',
             style: TextStyle(fontWeight: FontWeight.w400),
           ),
-          backgroundColor: Color(0xff00d7f3),
+          backgroundColor: const Color(0xff00d7f3),
           foregroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
@@ -57,7 +54,7 @@ class _TodoListPageState extends State<TodoListPage> {
               children: [
                 Center(
                   child: Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -67,11 +64,11 @@ class _TodoListPageState extends State<TodoListPage> {
                               child: TextField(
                                 controller: todoController,
                                 decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
+                                  border: const OutlineInputBorder(),
                                   labelText: 'Adicione uma tarefa',
                                   hintText: 'Ex. Ir para Academia',
                                   errorText: errorText,
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0xff00d7f3),
                                       width: 2,
@@ -79,13 +76,13 @@ class _TodoListPageState extends State<TodoListPage> {
                                   ),
                                   labelStyle: TextStyle(
                                     color: isErrorText
-                                        ? Color(0xFFFF0000)
-                                        : Color(0xff00d7f3),
+                                        ? const Color(0xFFFF0000)
+                                        : const Color(0xff00d7f3),
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             ElevatedButton(
                               onPressed: () {
                                 String text = todoController.text;
@@ -105,21 +102,21 @@ class _TodoListPageState extends State<TodoListPage> {
                                 todoRepository.saveTodoList(todos);
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xff00d7f3),
+                                backgroundColor: const Color(0xff00d7f3),
                                 foregroundColor: Colors.white,
-                                padding: EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.all(16.0),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              child: Icon(Icons.add),
+                              child: const Icon(Icons.add),
                             ),
                           ],
                         ),
-                        SizedBox(height: 16),
-                        Container(
+                        const SizedBox(height: 16),
+                        SizedBox(
                           height: constraint.minHeight * 0.53,
-                          child: todos.length == 0
+                          child: todos.isEmpty
                               ? Center(
                                   child: Container(
                                     width: constraint.minWidth * 0.7,
@@ -131,7 +128,7 @@ class _TodoListPageState extends State<TodoListPage> {
                                       children: [
                                         Image.asset(
                                             'assets/nenhuma_tarefa.png'),
-                                        Text(
+                                        const Text(
                                           'Nenhuma tarefa',
                                           style: TextStyle(
                                               fontSize: 23,
@@ -146,27 +143,26 @@ class _TodoListPageState extends State<TodoListPage> {
                                     TodoListItem(
                                       todo: todo,
                                       onDelete: onDelete,
-                                      onEdit: onEdit,
                                     ),
                                 ]),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Row(children: [
                           Expanded(
                               child: Text(
                                   'Você possui ${todos.length} tarefas pendentes')),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           ElevatedButton(
                               onPressed: showDeleteTodosConfirmationDialog,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xff00d7f3),
+                                backgroundColor: const Color(0xff00d7f3),
                                 foregroundColor: Colors.white,
-                                padding: EdgeInsets.all(14.0),
+                                padding: const EdgeInsets.all(14.0),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              child: Text('Limpar tudo'))
+                              child: const Text('Limpar tudo'))
                         ])
                       ],
                     ),
@@ -179,50 +175,6 @@ class _TodoListPageState extends State<TodoListPage> {
       );
     });
   }
-
-  void onEdit(Todo todo) {
-    setState(() {
-      todoController.text = todo.title;
-      editTodo = todo;
-      editTodoPos = todos.indexOf(todo);
-    });
-    showDialog(
-        context: context,
-        builder: (context) {
-          TextEditingController editController =
-              TextEditingController(text: todo.title);
-          return AlertDialog(
-            title: Text('Editar Tarefa'),
-            content: TextField(
-              controller: editController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Edite sua tarefa",
-              ),
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor: const Color(0xFFFF0000),
-                  ),
-                  child: Text('Cancelar')),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    deleteAllTodos();
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor: const Color(0xff00d7f3),
-                  ),
-                  child: Text('Salvar')),
-            ],
-          );
-        });
-  }
-
   void onDelete(Todo todo) {
     deletedTodo = todo;
     deletedTodoPos = todos.indexOf(todo);
@@ -235,8 +187,8 @@ class _TodoListPageState extends State<TodoListPage> {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
-        'Tarefa ${todo.title} foi removida com sucesso',
-        style: TextStyle(color: Color(0xFF060708)),
+        'Tarefa "${todo.title}" foi removida com sucesso',
+        style: const TextStyle(color: Color(0xFF060708)),
       ),
       backgroundColor: Colors.white,
       action: SnackBarAction(
@@ -257,8 +209,8 @@ class _TodoListPageState extends State<TodoListPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Limpar tudo?'),
-        content: Text('Você tem certeza que deseja apagar todas as tarefas?'),
+        title: const Text('Limpar tudo?'),
+        content: const Text('Você tem certeza que deseja apagar todas as tarefas?'),
         actions: [
           TextButton(
               onPressed: () {
@@ -267,7 +219,7 @@ class _TodoListPageState extends State<TodoListPage> {
               style: TextButton.styleFrom(
                 foregroundColor: const Color(0xFF00d7f3),
               ),
-              child: Text('Cancelar')),
+              child: const Text('Cancelar')),
           TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -276,7 +228,7 @@ class _TodoListPageState extends State<TodoListPage> {
               style: TextButton.styleFrom(
                 foregroundColor: const Color(0xFFFF0000),
               ),
-              child: Text('Limpar tudo')),
+              child: const Text('Limpar tudo')),
         ],
       ),
     );
@@ -287,10 +239,6 @@ class _TodoListPageState extends State<TodoListPage> {
       todos.clear();
     });
     todoRepository.saveTodoList(todos);
-  }
-  void saveTodos() {
-    setState(() {;
-    });
   }
 
 }
