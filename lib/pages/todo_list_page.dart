@@ -40,7 +40,7 @@ class _TodoListPageState extends State<TodoListPage> {
         appBar: AppBar(
           title: const Text(
             'Lista de Tarefas',
-            style: TextStyle(fontWeight: FontWeight.w400),
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
           ),
           backgroundColor: const Color(0xff00d7f3),
           foregroundColor: Colors.white,
@@ -204,7 +204,6 @@ class _TodoListPageState extends State<TodoListPage> {
       duration: const Duration(seconds: 5),
     ));
   }
-
   void showDeleteTodosConfirmationDialog() {
     showDialog(
       context: context,

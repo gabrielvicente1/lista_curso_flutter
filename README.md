@@ -1,16 +1,65 @@
-# todo_list
+# Lista de Tarefas - Todo List
 
-A new Flutter project.
+Este projeto Flutter permite criar de forma organizada suas tarefas. O usuário pode criar e apagar tarefas na lista, tendo a opção também de desfazer a remoção da tarefa.
 
-## Getting Started
+## 📌 Funcionalidades
+- Adicionar tarefas com título e data automática.
+- Exibir a lista de tarefas pendentes.
+- Excluir tarefas individualmente com opção de desfazer.
+- Limpar todas as tarefas de uma vez.
+- Feedback visual quando não há tarefas.
 
-This project is a starting point for a Flutter application.
+## 🛠 Tecnologias Utilizadas
+- **Flutter**: SDK para desenvolvimento de aplicativos multiplataforma.
+- **Dart**: Linguagem de programação usada no Flutter.
+- **Material Design**: Interface intuitiva e responsiva.
+- **Shared Preferences**: Armazena a lista de tarefas localmente.
 
-A few resources to get you started if this is your first Flutter project:
+## 📦 Dependências
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: ^2.2.2
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🚀 Como Rodar o Projeto
+1. **Clone o repositório**
+   ```sh
+   git clone https://github.com/seu-usuario/todo_list.git
+   cd todo_list
+   ```
+2. **Instale as dependências**
+   ```sh
+   flutter pub get
+   ```
+3. **Execute o projeto**
+   ```sh
+   flutter run
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🖼️ Estrutura do Projeto
+```
+/lib
+  ├── main.dart                # Arquivo principal do aplicativo
+  ├── pages/
+  │     ├── todo_list_page.dart # Tela principal com a lista de tarefas
+  ├── models/
+  │     ├── todo.dart           # Modelo de dados para as tarefas
+  ├── repositories/
+  │     ├── todo_repository.dart # Gerenciamento de tarefas com armazenamento local
+  ├── widgets/
+  │     ├── todo_list_item.dart  # Widget responsável por exibir cada tarefa
+/assets
+  ├── nenhuma_tarefa.png        # Imagem exibida quando não há tarefas
+```
+
+## 🔍 Sobre o Gerenciamento de Tarefas
+As tarefas são armazenadas localmente utilizando a biblioteca shared_preferences. Isso permite que a lista seja mantida mesmo após o fechamento do aplicativo.
+
+## 📄 Licença
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+
+
+
